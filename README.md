@@ -1,6 +1,6 @@
 # excel-challenge2
 
-I couldn't figure out a way to populate my volume results. I turned in what I was able to do. 
+I couldn't figure out a way to populate my volume results. I turned in what I was able to do. I also just tried to do everything in one script, not sure if thats where i messed up.
 
 
 Here are the links I used for external help:
