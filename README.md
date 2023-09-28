@@ -1,5 +1,8 @@
 # excel-challenge2
 
+I couldn't figure out a way to populate my volume results. I turned in what I was able to do. 
+
+
 Here are the links I used for external help:
 
 https://stackoverflow.com/questions/62471422/vba-loop-how-to-get-ticker-symbols-into-ticker-column
