@@ -1,0 +1,118 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2638
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 Sub YearStocks()\
+\
+For Each ws In Worksheets\
+\
+\
+Dim WSName As String\
+\
+Dim PercentChange As Double\
+Dim GIncrease As Double\
+Dim GDecrease As Double\
+Dim TVolume As Double\
+\
+Dim i As Long 'i\
+Dim TickerCol As Long 'j\
+Dim TickerCounter As Long\
+Dim LastA As Long\
+Dim LastI As Long\
+\
+WSName = ws.Name\
+TickerCounter = 2\
+TickerCol = 2\
+\
+'column Names\
+ws.Cells(1, 9).Value = "Ticker"\
+ws.Cells(1, 10).Value = "Yearly Change"\
+ws.Cells(1, 11).Value = "Percent Change"\
+ws.Cells(1, 12).Value = "Total Stock Volume"\
+ws.Cells(1, 16).Value = "Ticker"\
+ws.Cells(1, 17).Value = "Value"\
+ws.Cells(2, 15).Value = "Greatest % Increase"\
+ws.Cells(3, 15).Value = "Greatest % Decrease"\
+ws.Cells(4, 15).Value = "Greatest Total Volume"\
+\
+LastA = ws.Cells(Rows.Count, 1).End(xlUp).Row\
+\
+'for loop\
+For CurrentRow = 2 To LastA\
+\
+        If ws.Cells(CurrentRow + 1, 1).Value <> ws.Cells(CurrentRow, 1).Value Then\
+        ws.Cells(TickerCounter, 9).Value = ws.Cells(CurrentRow, 1).Value\
+        ws.Cells(TickerCounter, 10).Value = ws.Cells(CurrentRow, 6).Value - ws.Cells(TickerCol, 3).Value\
+            \
+    'conditional formating\
+        If ws.Cells(TickerCounter, 10).Value < 0 Then\
+        ws.Cells(TickerCounter, 10).Interior.ColorIndex = 22\
+        \
+        Else\
+        ws.Cells(TickerCounter, 10).Interior.ColorIndex = 35\
+    \
+        End If\
+        If ws.Cells(TickerCol, 3).Value <> 0 Then\
+        Change = ((ws.Cells(CurrentRow, 6).Value - ws.Cells(TickerCol, 3).Value) / ws.Cells(TickerCol, 3).Value)\
+        ws.Cells(TickerCounter, 11).Value = Format(Change, "Percent")\
+                    \
+        Else\
+        ws.Cells(TickerCounter, 11).Value = Format(0, "Percent")\
+                    \
+        End If\
+        ws.Cells(TickerCounter, 12).Value = WorksheetFunction.Sum(Range(ws.Cells(TickerCol, 7), ws.Cells(CurrentRow, 7)))\
+                \
+TickerCounter = TickerCounter + 1\
+TickerCol = CurrentRow + 1\
+        \
+        End If\
+            \
+Next CurrentRow\
+        \
+    LastI = ws.Cells(Rows.Count, 9).End(xlUp).Row\
+       \
+    GIncrease = ws.Cells(2, 11).Value\
+    GDecrease = ws.Cells(2, 11).Value\
+    GVolume = ws.Cells(2, 12).Value\
+       \
+    'second for loop - results\
+    For CurrentRow = 2 To LastI\
+        \
+        If ws.Cells(CurrentRow, 12).Value > GVolume Then\
+        GVolume = ws.Cells(CurrentRow, 12).Value\
+        ws.Cells(4, 16).Value = ws.Cells(CurrentRow, 9).Value\
+                \
+        Else\
+        GVolume = GVolume\
+                \
+        End If\
+        \
+        If ws.Cells(CurrentRow, 11).Value > GIncrease Then\
+        GIncrease = ws.Cells(CurrentRow, 11).Value\
+        ws.Cells(2, 16).Value = ws.Cells(CurrentRow, 9).Value\
+\
+        Else\
+        GIncrease = GIncrease\
+                \
+        End If\
+        \
+        If ws.Cells(CurrentRow, 11).Value < GDecrease Then\
+        GDecrease = ws.Cells(CurrentRow, 11).Value\
+        ws.Cells(3, 16).Value = ws.Cells(CurrentRow, 9).Value\
+                \
+        Else\
+        GDecrease = GDecrease\
+        \
+        End If\
+        ws.Cells(2, 17).Value = Format(GIncrease, "Percent")\
+        ws.Cells(3, 17).Value = Format(GDecrease, "Percent")\
+        ws.Cells(4, 17).Value = Format(GreatVol, "Scientific")\
+            \
+       Next CurrentRow\
+            \
+    Next ws\
+\
+End Sub}
